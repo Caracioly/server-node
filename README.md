@@ -114,6 +114,28 @@ atualizar o package.json para ler nossas variaveis de ambiente antes da execuç�
 400 -> Erro do client (Erro em alguma informação enviada por QUEM está fazendo a chamada para a API)
 500 -> Erro do servidor (erro que esta acontecendo idependente do que esta sendo enviado para o servidor)
 
-``npm i fastify-type-provider-zod``
+`npm i fastify-type-provider-zod`
 
 **Table não apareceu no intelli code do prisma** -> ctrl + shift + p "restart ts server"
+
+`npx prisma db seed`
+npm i @fastify/swagger -> documentação
+npm i @fastify/swagger-ui
+npm i @fastify/cors -> quais aplicalçoes poderam consumir minha api
+
+npm i tsup -D -> para buildar
+npm run build
+
+npm run start -> iniciar o projeto fora da area de desenvovimento já convertido para js
+
+**_Package.json_**
+
+```json
+"scripts": {
+  "dev": "tsx watch --env-file .env src/server.ts",
+  "build": "tsup src --format esm",
+  "start": "node dist/server.mjs",
+  "db:migrate": "prisma migrate dev",
+  "db:studio": "prisma studio"
+},
+```

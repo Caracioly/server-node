@@ -1,11 +1,14 @@
-import { FastifyInstance } from "fastify";
-import { ZodTypeProvider } from "fastify-type-provider-zod";
-import { prisma } from "../lib/prisma";
-import { z } from "zod";
-import { BadRequest } from "./_erros/bad-request";
+import {
+  BadRequest
+} from "./chunk-6OJH4T5L.mjs";
+import {
+  prisma
+} from "./chunk-JV6GRE7Y.mjs";
 
-export async function registerForEvent(app: FastifyInstance) {
-  app.withTypeProvider<ZodTypeProvider>().post(
+// src/routes/register-for-event.ts
+import { z } from "zod";
+async function registerForEvent(app) {
+  app.withTypeProvider().post(
     "/events/:eventId/attendees",
     {
       schema: {
@@ -13,67 +16,61 @@ export async function registerForEvent(app: FastifyInstance) {
         tags: ["attendees"],
         body: z.object({
           name: z.string().min(4),
-          email: z.string().email(),
+          email: z.string().email()
         }),
         params: z.object({
-          eventId: z.string().uuid(),
+          eventId: z.string().uuid()
         }),
         response: {
           201: z.object({
-            attendeeId: z.number(),
-          }),
-        },
-      },
+            attendeeId: z.number()
+          })
+        }
+      }
     },
     async (request, reply) => {
       const { eventId } = request.params;
       const { name, email } = request.body;
-
       const attendeeFromEmail = await prisma.attendee.findUnique({
         where: {
           eventId_email: {
             email,
-            eventId,
-          },
-        },
+            eventId
+          }
+        }
       });
-
       if (attendeeFromEmail !== null) {
         throw new BadRequest("This e-mail is already registered for this event");
       }
-
       const [event, amountOfAttendeesForEvent] = await Promise.all([
         prisma.event.findUnique({
           where: {
-            id: eventId,
-          },
+            id: eventId
+          }
         }),
-
         prisma.attendee.count({
           where: {
-            eventId,
-          },
-        }),
+            eventId
+          }
+        })
       ]);
-
-      if (
-        event?.maximumAttendees &&
-        amountOfAttendeesForEvent >= event.maximumAttendees
-      ) {
+      if (event?.maximumAttendees && amountOfAttendeesForEvent >= event.maximumAttendees) {
         throw new Error(
           "The maximum number of attendees for this event has been reached."
         );
       }
-
       const attendee = await prisma.attendee.create({
         data: {
           email,
           name,
-          eventId,
-        },
+          eventId
+        }
       });
-
       return reply.status(201).send({ attendeeId: attendee.id });
     }
   );
 }
+
+export {
+  registerForEvent
+};

@@ -8,19 +8,22 @@ Content-Type: application/json
 }
 
 ###
-
-POST http://localhost:3333/events/8aa8932b-f4f3-411b-8be5-941ac1f59bd2/attendees
+POST http://localhost:3333/events/7271efc4-1864-4bc7-8c05-80ed1c40a9e6/attendees
 Content-Type:  application/json
 
 {
     "name": "André Caracioly",
-    "email": "andre2@email.com"
+    "email": "andre@email.com"
 }
 
 ###
-
 GET http://localhost:3333/events/8aa8932b-f4f3-411b-8be5-941ac1f59bd2
 
 ###
-
 GET http://localhost:3333/attendees/8/badge
+
+### 
+GET http://localhost:3333/attendees/8/check-in
+
+###
+GET http://localhost:3333/events/8aa8932b-f4f3-411b-8be5-941ac1f59bd2/attendees

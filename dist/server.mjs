@@ -1,58 +1,67 @@
+import {
+  registerForEvent
+} from "./chunk-O6M2W3JW.mjs";
+import {
+  errorHandler
+} from "./chunk-57RYAKZ7.mjs";
+import {
+  checkIn
+} from "./chunk-D5FPOH77.mjs";
+import {
+  createEvent
+} from "./chunk-SISXORC3.mjs";
+import "./chunk-KDMJHR3Z.mjs";
+import {
+  getAttendeeBadge
+} from "./chunk-KWSNIYTB.mjs";
+import {
+  getEventAttendees
+} from "./chunk-H63GB53I.mjs";
+import {
+  getEvent
+} from "./chunk-PG6EKREF.mjs";
+import "./chunk-6OJH4T5L.mjs";
+import "./chunk-JV6GRE7Y.mjs";
+
+// src/server.ts
 import fastify from "fastify";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import {
   serializerCompiler,
   validatorCompiler,
-  jsonSchemaTransform,
+  jsonSchemaTransform
 } from "fastify-type-provider-zod";
-
-import { errorHandler } from "./error-handler";
-
-import { getEventAttendees } from "./routes/get-event-attendees";
-import { registerForEvent } from "./routes/register-for-event";
-import { getAttendeeBadge } from "./routes/get-attendee-badge";
-import { createEvent } from "./routes/create-event";
-import { getEvent } from "./routes/get-event";
-import { checkIn } from "./routes/check-in";
 import fastifyCors from "@fastify/cors";
-
-const app = fastify();
-
+var app = fastify();
 app.register(fastifyCors, {
-  origin: "*", //https://meufrontend.com
+  origin: "*"
+  //https://meufrontend.com
 });
-
 app.register(fastifySwagger, {
   swagger: {
     consumes: ["application/json"],
     produces: ["application/json"],
     info: {
       title: "pass.in",
-      description:
-        "Especificações da API para o back-end da aplicação pass.in construida durando o NLW Unite",
-      version: "1.0.0",
-    },
+      description: "Especifica\xE7\xF5es da API para o back-end da aplica\xE7\xE3o pass.in construida durando o NLW Unite",
+      version: "1.0.0"
+    }
   },
-  transform: jsonSchemaTransform,
+  transform: jsonSchemaTransform
 });
-
 app.register(fastifySwaggerUi, {
-  routePrefix: "/docs",
+  routePrefix: "/docs"
 });
-
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
-
 app.register(getEventAttendees);
 app.register(getAttendeeBadge);
 app.register(registerForEvent);
 app.register(createEvent);
 app.register(getEvent);
 app.register(checkIn);
-
 app.setErrorHandler(errorHandler);
-
 app.listen({ port: 3333, host: "0.0.0.0" }).then(() => {
   console.log("HTTP server running");
 });
