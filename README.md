@@ -101,8 +101,19 @@ atualizar o package.json para ler nossas variaveis de ambiente antes da execuç�
 },
 ```
 
-``npx prisma migrate dev`` "irá fazer uma varredura no prisma detectando as mudanças, pedirá um nome para indentificar essa migração, assim como um *commit*" <br>
+`npx prisma migrate dev` "irá fazer uma varredura no prisma detectando as mudanças, pedirá um nome para indentificar essa migração, assim como um _commit_" <br>
 
-``npx prisma studio`` "para visualizar na web a table"
+`npx prisma studio` "para visualizar na web a table"
 
-``npm i zod``
+`npm i zod`
+
+### Status Code
+
+200 -> Sucesso
+300 -> Redirecionamento
+400 -> Erro do client (Erro em alguma informação enviada por QUEM está fazendo a chamada para a API)
+500 -> Erro do servidor (erro que esta acontecendo idependente do que esta sendo enviado para o servidor)
+
+``npm i fastify-type-provider-zod``
+
+**Table não apareceu no intelli code do prisma** -> ctrl + shift + p "restart ts server"
